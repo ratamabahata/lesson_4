@@ -1,5 +1,5 @@
 #класс грузовые вагоны
-class CargoCarriage
+class CargoCarriage < Train
   attr_reader :carriage_number
   #заменил тип на номер вагона
   def initialize(carriage_number = rand(1..20))
