@@ -1,3 +1,4 @@
+#класс грузовые вагоны
 class CargoCarriage
   attr_reader :carriage_number
   #заменил тип на номер вагона

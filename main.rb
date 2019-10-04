@@ -1,3 +1,4 @@
+#загрузка созданных классов
 require_relative './train.rb'
 require_relative './route.rb'
 require_relative './passenger_carriage.rb'
@@ -8,13 +9,13 @@ require_relative './station.rb'
 
 class Main
   attr_reader :stations, :trains, :routes
-    
+   #инициализация массива станций, поездов и маршрутов. 
   def initialize
     @stations = []
     @trains = []
     @routes = []
   end
-
+#интерфейс и выбор
   def main_menu
     loop do
       puts 'Enter \'1\' to create station.'
@@ -46,12 +47,12 @@ class Main
       end
     end
   end
-  
+  #создание станции.
   def create_station
     puts 'Enter the station name'
     @stations << Station.new(gets.chomp.to_s)
   end
-  
+   #создание поезда. выбора типа поезда.
   def create_train
     puts 'Enter \'1\' to create passenger train.'
     puts 'Enter \'2\' to create cargo train.'
@@ -65,7 +66,7 @@ class Main
       @trains << CargoTrain.new(gets.chomp)
     end
   end
-  
+    #создание маршрута.
   def create_route
     puts 'To crate route enter two station of this list:'
     @stations.each.with_index { |station, index| puts "#{index} - #{station.name}" }
@@ -77,7 +78,7 @@ class Main
     last = @stations[number_last]
     @routes << Route.new(first, last)
   end
-  
+   #добавление станций в маршрут
   def add_station_in_route
     @routes.each.with_index { |route, index| puts "#{index} - #{route.stations.map { |station| station.name} }"  }
     puts 'Choose the route on that you need to add station.'
@@ -88,7 +89,7 @@ class Main
     number_station = gets.chomp.to_i
     current_route.add_station(@stations[number_station])
   end
-  
+    #удаление станций в маршрут.
   def remove_station_in_route
     @routes.each.with_index { |route, index| puts "#{index} - #{route.stations.map { |station| station.name} }"  }
     puts 'Choose the route on that you need to remove station.'
@@ -99,7 +100,7 @@ class Main
     number_station = gets.chomp.to_i
     current_route.delete_station(@stations[number_station])
   end
-  
+ #назначить маршрут поезду. 
   def get_route_to_train
     puts 'Choose route for train.'
     @routes.each.with_index { |route, index| puts "#{index} - #{route.stations.map { |station| station.name} }"  }
@@ -111,7 +112,7 @@ class Main
     current_train = @trains[number_train]
     current_train.take_route(current_route)
   end
-  
+    #Добавлять вагоны к поезду
   def add_carriage
     @trains.each.with_index { |train, index| puts "#{index} - #{train.number}(#{train.type})" }
     puts 'Choose train that need to add corriage.'
@@ -127,7 +128,7 @@ class Main
     end
     puts "Number of carriage = #{@trains[number_train].count_carriages}"
   end
-  
+    # Отцеплять вагоны от поезда
   def delete_carriage
     @trains.each.with_index { |train, index| puts "#{index} - #{train.number}(#{train.type})" }
     puts 'Choose train that need to remove corriage.'
@@ -135,7 +136,7 @@ class Main
     @trains[number_train].remove_carriage if @trains[number_train].carriages.length != 0
     puts "Number of carriage = #{@trains[number_train].count_carriages}"
   end
-  
+    #Перемещать поезд по маршруту вперед и назад
   def move_train
     @trains.each.with_index { |train, index| puts "#{index} - #{train.number}(#{train.type})" }
     puts 'Choose train that you need to move.'
@@ -147,7 +148,7 @@ class Main
     when 2 then @trains[number_train].backward
     end
   end
-  
+    #Просматривать список станций и список поездов на станции
   def list_stations_and_trains_on_it
     @stations.each.with_index { |station, index| puts "#{index} - #{station.name}" }
     puts "Enter number of station to view which trains on it."

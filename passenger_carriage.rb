@@ -1,3 +1,4 @@
+#Класс пасажирских вагонов
 class PassengerCarriage
   attr_reader :carriage_number
   #заменил тип на номер вагона  
